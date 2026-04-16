@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: inter;
+        background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+        color: #1f2f49;
+        padding-top: 92px;
+        overflow-x: hidden;
+    }
+
+    body {
+        font-family: inter;
+        background: linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);
+        color: #1f2f49;
+        padding-top: 92px;
+        overflow-x: hidden;
+    }
+
+    a,
+    button,
+    input,
+    textarea,
+    select {
+        font: inherit;
+    }
+
+    .container {
+        width: min(100% - 32px, 1200px);
+        margin: 0 auto;
+    }
+
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid #d9e3f2;
+        z-index: 1000;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    }
+
+    .header-inner {
+        min-height: 92px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-decoration: none;
+        color: #1f2f49;
+        min-width: 0;
+    }
+
+    .logo {
+        width: 56px;
+        height: 56px;
+        flex: 0 0 56px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #2f5aa8, #6fa4ff);
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 18px;
+        box-shadow: 0 10px 18px rgba(47, 90, 168, 0.18);
+    }
+
+    .brand-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+    }
+
+    .brand-text strong {
+        font-size: 16px;
+        color: #183057;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .brand-text span {
+        font-size: 13px;
+        color: #5a6b85;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .nav a {
+        text-decoration: none;
+        color: #24324a;
+        padding: 10px 16px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 999px;
+        transition: 0.3s ease;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible {
+        background: #e8f1ff;
+        color: #2f5aa8;
+        outline: none;
+    }
+
+    .menu-checkbox {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: none;
+        width: 48px;
+        height: 48px;
+        border: 1px solid #d9e3f2;
+        border-radius: 14px;
+        background: #ffffff;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .menu-toggle span,
+    .menu-toggle::before,
+    .menu-toggle::after {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 2px;
+        background: #24324a;
+        border-radius: 999px;
+        transition: 0.3s ease;
+        position: relative;
+    }
+
+    .menu-toggle::before {
+        position: absolute;
+        transform: translateY(-6px);
+    }
+
+    .menu-toggle::after {
+        position: absolute;
+        transform: translateY(6px);
+    }
+
+    .menu-checkbox:checked~.menu-toggle span {
+        opacity: 0;
+    }
+
+    .menu-checkbox:checked~.menu-toggle::before {
+        transform: rotate(45deg);
+    }
+
+    .menu-checkbox:checked~.menu-toggle::after {
+        transform: rotate(-45deg);
+    }
+
+    .hero {
+        padding: clamp(24px, 4vw, 40px) 0 clamp(34px, 5vw, 52px);
+    }
+
+    .hero-box {
+        min-height: 500px;
+        border: 1px solid #dde7f5;
+        border-radius: 28px;
+        background: linear-gradient(135deg, #ffffff 0%, #f5f9ff 100%);
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+        align-items: center;
+        gap: clamp(20px, 4vw, 34px);
+        padding: clamp(18px, 3vw, 30px);
+        box-shadow: 0 14px 30px rgba(24, 48, 87, 0.08);
+        overflow: hidden;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: #edf4ff;
+        border: 1px solid #d6e4fb;
+        color: #2f5aa8;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 22px;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(2rem, 5vw, 3.35rem);
+        line-height: 1.12;
+        margin-bottom: 18px;
+        color: #183057;
+        max-width: 12ch;
+    }
+
+    .hero-content p {
+        font-size: clamp(1rem, 2vw, 1.125rem);
+        line-height: 1.8;
+        margin-bottom: 28px;
+        color: #5a6b85;
+        max-width: 620px;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 28px;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 14px 24px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        transition: 0.3s ease;
+        border: 1px solid transparent;
+        text-align: center;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #2f5aa8, #79aaff);
+        color: #ffffff;
+        box-shadow: 0 10px 20px rgba(47, 90, 168, 0.2);
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus-visible {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 24px rgba(47, 90, 168, 0.26);
+        outline: none;
+    }
+
+    .btn-secondary {
+        border-color: #cfe0fa;
+        color: #2b4774;
+        background: #ffffff;
+    }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus-visible {
+        background: #f3f8ff;
+        outline: none;
+    }
+
+    .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .hero-stat {
+        min-width: 0;
+        padding: 16px;
+        border-radius: 16px;
+        background: #ffffff;
+        border: 1px solid #e1ebf7;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    .hero-stat strong {
+        display: block;
+        font-size: clamp(1.2rem, 2vw, 1.45rem);
+        color: #2f5aa8;
+        margin-bottom: 6px;
+    }
+
+    .hero-stat span {
+        font-size: 13px;
+        line-height: 1.5;
+        color: #5d6e88;
+    }
+
+    .hero-visual {
+        position: relative;
+        min-height: 440px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero-image-wrap {
+        position: relative;
+        width: 100%;
+        max-width: 470px;
+        aspect-ratio: 47 / 43;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(26, 47, 82, 0.16);
+    }
+
+    .hero-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .floating-card {
+        position: absolute;
+        z-index: 2;
+        max-width: 210px;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #e2ebf8;
+        border-radius: 18px;
+        padding: 14px 16px;
+        box-shadow: 0 12px 26px rgba(0, 0, 0, 0.08);
+    }
+
+    .floating-card.top {
+        top: 24px;
+        left: 0;
+    }
+
+    .floating-card.bottom {
+        right: 0;
+        bottom: 24px;
+    }
+
+    .floating-card strong {
+        display: block;
+        font-size: 18px;
+        color: #1f3761;
+        margin-bottom: 4px;
+    }
+
+    .floating-card span {
+        font-size: 13px;
+        color: #607089;
+        line-height: 1.5;
+    }
+
+    .rectangle1 {
+        height: 425px;
+        width: 70%;
+        border-radius: 10px;
+        margin: 20px auto;
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        padding: 2px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .rectangle2 {
+        height: 40px;
+        width: 15%;
+        border-radius: 10px;
+        margin: 30px auto;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .rectangle2 p {
+        color: rgb(46, 81, 146);
+        font-family: inter;
+        font-weight: 700;
+
+    }
+
+    .rectangle4 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    .rectangle3 {
+        height: 170px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .rectangle3 h2 {
+        color: rgb(46, 81, 146);
+        font-family: inter;
+        margin: 20px 10px;
+    }
+
+    .rectangle3 p {
+        color: gray;
+        font-family: inter;
+        margin-left: 10px;
+        font-size: 13px;
+    }
+
+    .rectangle6 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    .rectangle7 {
+        height: 270px;
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .rectangle8 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    .rectangle9 {
+        height: 95px;
+        border-radius: 8px;
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        padding: 20px;
+    }
+
+    .rectangle9 h2 {
+        font-family: inter;
+        color: cornflowerblue;
+        font-size: 20px;
+    }
+
+    .rectangle9 p {
+        font-family: inter;
+        color: gray;
+        font-size: 10px;
+    }
+
+    .rectangle10 {
+        height: 200px;
+        width: 90%;
+        border-radius: 10px;
+        margin: 20px auto;
+        text-align: center;
+        background-color: rgb(33, 61, 112);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        padding: 20px;
+        line-height: 1.5;
+    }
+
+    .rectangle10 h2 {
+        font-family: inter;
+        color: white;
+        font-weight: 700;
+    }
+
+    .rectangle10 p {
+        color: white;
+        font-family: inter;
+        font-weight: 100;
+        font-size: 13px;
+    }
+
+    .cercle {
+        width: 8%;
+        justify-content: space-around;
+        display: flex;
+        margin: 0 auto;
+    }
+
+    .cercle1 {
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+        background-color: rgb(149, 179, 234);
+    }
+
+    .footer {
+        height: 50px;
+        width: 90%;
+        border-radius: 8px;
+        margin: 20px auto;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .footer p {
+        font-family: inter;
+        font-size: 10px;
+        color: gray;
+    }
+
+
+    .rectangle7 img {
+        width: 100%;
+        overflow: hidden;
+        height: 150px;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+
+    }
+
+    .rectangle7 h2 {
+        color: rgb(46, 81, 146);
+        font-family: inter;
+        margin: 7px 10px;
+    }
+
+    .rectangle7 p {
+        color: gray;
+        font-family: inter;
+        margin-left: 10px;
+        font-size: 13px;
+    }
+
+    button {
+        border: none;
+        border-radius: 5px;
+        height: 30px;
+        font-family: inter;
+        font-weight: 700;
+        font-size: 0.7rem;
+        margin-top: 25px;
+    }
+
+    .bouton3 {
+        width: 130px;
+        background-color: cornflowerblue;
+        color: white;
+    }
+
+    .bouton4 {
+        width: 160px;
+        background-color: white;
+        color: rgb(46, 81, 146);
+    }
+
+    .grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 72px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        width: 90%;
+    }
+
+
+    @media (max-width: 1024px) {
+        .hero-box {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-content h1 {
+            max-width: none;
+        }
+
+        .hero-visual {
+            min-height: auto;
+            padding-top: 10px;
+        }
+
+        .hero-image-wrap {
+            max-width: 100%;
+        }
+
+        .rectangle6 {
+            grid-template-columns: repeat(2,1fr);
+        }
+
+        .rectangle8 {
+            grid-template-columns: repeat(2,1fr);
+        }
+        
+        .rectangle9 p {
+            font-size: 13px;
+        }
+
+    }
+
+    @media (max-width: 860px) {
+        body {
+            padding-top: 84px;
+        }
+
+        .header-inner {
+            min-height: 84px;
+        }
+
+        .menu-toggle {
+            display: inline-flex;
+            position: relative;
+            z-index: 1002;
+        }
+
+        .nav {
+            position: fixed;
+            top: 84px;
+            left: 16px;
+            right: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 8px;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.98);
+            border: 1px solid #d9e3f2;
+            border-radius: 20px;
+            box-shadow: 0 14px 30px rgba(24, 48, 87, 0.08);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: 0.3s ease;
+        }
+
+        .menu-checkbox:checked~.nav {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav a {
+            width: 100%;
+            text-align: center;
+            background: #f8fbff;
+        }
+
+        .rectangle1 {
+            flex-direction: column;
+            height: auto;
+            width: 90%;
+            padding: 20px;
+        }
+
+        .rectangle2 {
+            width: 60%;
+            height: auto;
+            padding: 10px;
+        }
+
+        .rectangle4 {
+            grid-template-columns: 1fr;
+            width: 90%;
+        }
+
+        .rectangle6 {
+            grid-template-columns: 1fr;
+            width: 90%;
+        }
+
+        .rectangle8 {
+            grid-template-columns: repeat(2, 1fr);
+            width: 90%;
+        }
+
+        .rectangle3,
+        .rectangle7,
+        .rectangle9 {
+            height: auto;
+            padding-bottom: 15px;
+        }
+
+        .rectangle10 {
+            width: 90%;
+            height: auto;
+        }
+
+        .footer {
+            width: 90%;
+        }
+
+    }
+
+    @media (max-width: 680px) {
+        .container {
+            width: min(100% - 24px, 1200px);
+        }
+
+        .brand-text span {
+            display: none;
+        }
+
+        .hero-box {
+            border-radius: 22px;
+            padding: 18px;
+        }
+
+        .hero-badge {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .hero-actions {
+            flex-direction: column;
+        }
+
+        .hero-actions .btn {
+            width: 100%;
+        }
+
+        .hero-stats {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-visual {
+            gap: 14px;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .floating-card {
+            position: static;
+            max-width: 100%;
+        }
+
+        .rectangle8 {
+            grid-template-columns: repeat(1,1fr);
+        }
+        
+        .cercle {
+            width: 20%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            padding-top: 78px;
+        }
+
+        .header-inner {
+            min-height: 78px;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            flex-basis: 48px;
+            border-radius: 14px;
+        }
+
+        .brand-text strong {
+            font-size: 15px;
+        }
+
+        .hero-image-wrap {
+            border-radius: 22px;
+        }
+    }
+</style>
+
+
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <a href="#accueil" class="brand">
+                <div class="logo">SW</div>
+                <div class="brand-text">
+                    <strong>Sophietou Wone</strong>
+                    <span>Portfolio étudiant / personnel</span>
+                </div>
+            </a>
+            <input type="checkbox" id="menuToggle" class="menu-checkbox" />
+            <label for="menuToggle" class="menu-toggle" aria-label="Ouvrir le menu">
+                <span></span>
+            </label>
+            <nav class="nav">
+                <a href="#accueil">Accueil</a>
+                <a href="#apropos">À propos</a>
+                <a href="#projets">Projets</a>
+                <a href="#profil">Profil</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+        </div>
+    </header>
+    <main>
+        <section class="hero" id="accueil">
+            <div class="container">
+                <div class="hero-box">
+
+                    <div class="hero-content">
+                        <div class="hero-badge">✨Portfolio moderne & évolutif</div>
+
+                        <h1>Construire mon parcours avec passion, créativité et ambition</h1>
+
+                        <p>
+                            Bonjour, je suis Awa Ndiaye, étudiante passionnée par le numérique,
+                            l'apprentissage et la création d'interfaces modernes.
+                        </p>
+
+                        <div class="hero-actions">
+                            <a href="#projets" class="btn btn-primary">Voir mes projets</a>
+                            <a href="#contact" class="btn btn-secondary">Me contacter</a>
+                        </div>
+
+                        <div class="hero-stats">
+                            <div class="hero-stat">
+                                <strong>5+</strong>
+                                <span>Projets réalisés</span>
+                            </div>
+                            <div class="hero-stat">
+                                <strong>100%</strong>
+                                <span>Motivation & progression</span>
+                            </div>
+                            <div class="hero-stat">
+                                <strong>UI</strong>
+                                <span>Design & web moderne</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual">
+                        <div class="floating-card top">
+                            <strong>Créativité</strong>
+                            <span>Idées claires et visuelles</span>
+                        </div>
+
+                        <div class="hero-image-wrap">
+                            <img class="hero-image" src="maphoto2.png" alt="Étudiante" />
+                        </div>
+
+                        <div class="floating-card bottom">
+                            <strong>Apprentissage</strong>
+                            <span>Évolution continue</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+    <div class="rectangle2">
+        <p>À propos de moi</p>
+    </div>
+    <div class="rectangle4">
+        <div class="rectangle3">
+            <h2>Mon parcours</h2>
+            <p>Je suis une étudiante curieuse et motivée, passionnée par les outils numériques, le web et la
+                communication visuelle. J’aime apprendre en expérimentant, développer des projets personnels et
+                améliorer mes compétences au fil du temps.</p>
+        </div>
+        <div class="rectangle3">
+            <h2>Mes objectifs</h2>
+            <p>Je souhaite construire un profil solide qui combine compétences techniques et créativité. Mon ambition
+                est de comprendre les tendances du monde visuel et, à terme, de contribuer à leur évolution.</p>
+        </div>
+        <div class="rectangle3">
+            <h2>Mes qualités</h2>
+            <p>Je suis organisée, perfectionniste et attentive aux détails. J’apprécie les semaines bien remplies, les
+                idées nouvelles et les projets simples mais soignés. J’ai toujours envie d’apprendre et de progresser.
+            </p>
+        </div>
+        <div class="rectangle3">
+            <h2>Ce que je recherche</h2>
+            <p>Je recherche des opportunités d’apprentissage, des collaborations académiques et des projets liés au
+                développement web, à la conception ou à la réalisation de projets personnels.</p>
+        </div>
+    </div>
+    <div class="rectangle2">
+        <p>Mes projets</p>
+    </div>
+    <div class="rectangle6">
+        <div class="rectangle7">
+            <img src="dashboard.jpeg" alt="">
+            <h2>Dashboard interactif</h2>
+            <p>Création d’un tableau de bord dynamique avec graphiques, filtres et données mises à jour automatiquement.
+            </p>
+        </div>
+        <div class="rectangle7">
+            <img src="e-com.jpeg" alt="">
+            <h2>Page e-commerce</h2>
+            <p>Réalisation d’une page produit complète avec images, description, interactions et mise en page
+                responsive.</p>
+        </div>
+        <div class="rectangle7">
+            <img src="formulaire.jpeg" alt="">
+            <h2>Formulaire intelligent</h2>
+            <p>Développement d’un formulaire moderne avec validation en temps réel et messages d’erreur adaptés.</p>
+        </div>
+        <div class="rectangle7">
+            <img src="java1.jpeg" alt="">
+            <h2>Jeu javascript</h2>
+            <p>Création d’un petit jeu interactif pour renforcer la logique, gérer les événements et améliorer
+                l’expérience utilisateur.</p>
+        </div>
+        <div class="rectangle7">
+            <img src="blog1.png" alt="">
+            <h2>Mini blog</h2>
+            <p>Réalisation d’un blog simple avec articles, navigation fluide et mise en page responsive.</p>
+        </div>
+        <div class="rectangle7">
+            <img src="portfolio.jpeg" alt="">
+            <h2>Portfolio personnel</h2>
+            <p>Développement d’un site moderne pour présenter son parcours, ses projets et ses compétences de manière
+                professionnelle.</p>
+        </div>
+    </div>
+    <div class="rectangle2">
+        <p>Mon profil</p>
+    </div>
+    <div class="rectangle8">
+        <div class="rectangle9">
+            <h2>2026</h2>
+            <p>Année de la progression et de consolidation</p>
+        </div>
+        <div class="rectangle9">
+            <h2>5+</h2>
+            <p>Projets d'apprentissage réalisés</p>
+        </div>
+        <div class="rectangle9">
+            <h2>100%</h2>
+            <p>Motivation pour apprendre et évoluer</p>
+        </div>
+        <div class="rectangle9">
+            <h2>UI</h2>
+            <p>Intèrêt pour le web et design visuel</p>
+        </div>
+    </div>
+    <div class="rectangle10">
+        <h2>Contact</h2>
+        <p>Je suis ouverte aux échanges, aux opportunités et aux projets académiques <br> ou personnels. N'hésiter pas à
+            me contacter pour discuter, collaborer ou simplement découvrir mon univers.</p>
+        <button class="bouton3">Envoyer un mail</button>
+        <button class="bouton4">Télécharher mon CV</button>
+    </div>
+    <div class="cercle">
+        <div class="cercle1"></div>
+        <div class="cercle1"></div>
+        <div class="cercle1"></div>
+        <div class="cercle1"></div>
+    </div>
+    <div class="footer">
+        <p>© 2026 Sophietou Wone — Portfolio étudiant / personnel</p>
+    </div>
+
+
+
+</body>
+
+</html>
